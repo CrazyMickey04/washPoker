@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>washpoker by crazy</title>
+</head>
+<body>
+    <div id="cards"></div>
+    <button id="washBtn">洗牌</button>
+    <button id="resetBtn">新牌</button>
+<script>
+    class Poker {
+        constructor() {
+            this.cards = []
+            this.initCards()
+            this.getDom("resetBtn").onclick = () => {
+                this.initCards()
+            }
+        }
+        initCards = () => {
+            let flowers = ['红桃', '黑体', '方片', '梅花'];
+            let num =  ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
+            let card = ["大王", "小王"];
+            num.forEach(n => {
+                flowers.forEach(flower => {
+                    card.push(flower + n)
+                })
+            })
+            this.cards = card;
+            this.printCards()
+            let btnDom = this.getDom('washBtn')
+            btnDom.onclick = () => {
+                this.wash()
+            }
+            
+        }
+        getDom = (id) => {
+            return document.getElementById(id)
+        }
+        wash = () => {
+            console.log('洗牌')
+            this.cards.forEach( (item, index) => {
+                let randIndex = Math.floor(Math.random() * this.cards.length);
+                //随机抽一张与当前牌调换
+                this.cards[index] = this.cards[randIndex]
+                this.cards[randIndex] = item; 
+            })
+            this.printCards()
+        }
+        printCards = () => {
+            let conDom = this.getDom('cards')
+            conDom.innerText = this.cards.join(',')
+            console.log(this.cards)
+            // this.checkWash();
+        }
+        checkWash = () => {
+            if((new Set(this.cards)).size != this.cards.length){
+                console.log("有重复扑克")
+            } else {
+                console.log("洗牌完成")
+            }
+        }
+    }
+    new Poker()
+</script>
+</body>
+</html>
