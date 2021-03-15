@@ -15,6 +15,9 @@
         constructor() {
             this.cards = []
             this.initCards()
+            this.getDom('washBtn').onclick = () => {
+                this.wash()
+            }
             this.getDom("resetBtn").onclick = () => {
                 this.initCards()
             }
@@ -30,11 +33,6 @@
             })
             this.cards = card;
             this.printCards()
-            let btnDom = this.getDom('washBtn')
-            btnDom.onclick = () => {
-                this.wash()
-            }
-            
         }
         getDom = (id) => {
             return document.getElementById(id)
@@ -53,7 +51,7 @@
             let conDom = this.getDom('cards')
             conDom.innerText = this.cards.join(',')
             console.log(this.cards)
-            // this.checkWash();
+            this.checkWash();
         }
         checkWash = () => {
             if((new Set(this.cards)).size != this.cards.length){
